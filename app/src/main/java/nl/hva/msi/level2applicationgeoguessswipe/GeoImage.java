@@ -1,5 +1,6 @@
 package nl.hva.msi.level2applicationgeoguessswipe;
 
+
 public class GeoImage {
     private String geoName;
     private int geoImageName;
@@ -25,16 +26,19 @@ public class GeoImage {
         this.geoImageName = geoImageName;
     }
 
-    public static final String[] PRE_DEFINED_OBJECT_NAMES = {
-            "YES_Denmark",
-            "NO_Canada",
-            "NO_Bangladesh",
-            "YES_Kazachstan",
-            "NO_Colombia",
-            "YES_Poland",
-            "YES_Malta",
-            "NO_Thailand"
+    public static final String[] PRE_DEFINED_IMAGE_NAMES = {
+            "Y_Denmark",
+            "N_Canada",
+            "N_Bangladesh",
+            "Y_Kazachstan",
+            "N_Colombia",
+            "Y_Poland",
+            "Y_Malta",
+            "N_Thailand"
     };
+
+
+
 
     public static final int[] PRE_DEFINED_GEO_OBJECT_IMAGE_IDS = {
             R.drawable.img1_yes_denmark,

@@ -3,13 +3,14 @@ package nl.hva.msi.level2applicationgeoguessswipe;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
 
-public class GeoObjectAdapter extends RecyclerView.Adapter<GeoObjectViewHolder> {
+public class GeoObjectAdapter extends RecyclerView.Adapter<GeoObjectViewHolder>  {
 
     private Context context;
 
@@ -38,5 +39,4 @@ public class GeoObjectAdapter extends RecyclerView.Adapter<GeoObjectViewHolder> 
         return geoImages.size();
     }
 
-    public void notifyIf
 }
