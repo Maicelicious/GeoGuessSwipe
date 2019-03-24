@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         final RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
-        RecyclerView.LayoutManager recycleViewLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
+        final RecyclerView.LayoutManager recycleViewLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
 
         recyclerView.setLayoutManager(recycleViewLayoutManager);
         recyclerView.setHasFixedSize(true);
@@ -56,23 +56,28 @@ public class MainActivity extends AppCompatActivity {
                     //Called when a user swipes left or right on a ViewHolder
                     @Override
                     public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                        ((StaggeredGridLayoutManager) recycleViewLayoutManager).scrollToPositionWithOffset(2,20);
                         //Get the index corresponding to the selected position
                         int position = (viewHolder.getAdapterPosition());
                         GeoImage geoImage = geoImages.get(position);
                         if (geoImage == null) {
                             reset();
+                            return;
                         }
 
                         boolean isInEurope = checkIfGeoImageIsInEurope(geoImage.getGeoName());
-                        if (swipeDir == ItemTouchHelper.LEFT && isInEurope) {
-                            Toast.makeText(context, "You are right next one!", Toast.LENGTH_SHORT).show();
+                        if (swipeDir == ItemTouchHelper.LEFT && isInEurope || swipeDir == ItemTouchHelper.RIGHT && !isInEurope) {
+                            Toast.makeText(context, "You are right next one! Country: " + geoImage.getGeoName(), Toast.LENGTH_SHORT).show();
                             geoImages.remove(geoImage);
                             geoObjectAdapter.geoImages.remove(geoImage);
-                        }
-                        if (swipeDir == ItemTouchHelper.RIGHT && !isInEurope) {
+                        } else{
                             Toast.makeText(context, "You are wrong try again!", Toast.LENGTH_SHORT).show();
                         }
-
+                        geoObjectAdapter.notifyDataSetChanged();
+                        if (geoObjectAdapter.getItemCount() == 0){
+                            reset();
+                            return;
+                        }
                     }
                 };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
@@ -83,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < GeoImage.PRE_DEFINED_IMAGE_NAMES.length; i++) {
             geoImages.add(new GeoImage(GeoImage.PRE_DEFINED_IMAGE_NAMES[i], GeoImage.PRE_DEFINED_GEO_OBJECT_IMAGE_IDS[i]));
         }
-        Toast.makeText(this, "New Round!", Toast.LENGTH_SHORT);
+        Toast.makeText(this, "New Round!", Toast.LENGTH_SHORT).show();
     }
 
     private boolean checkIfGeoImageIsInEurope(String geoName) {
